@@ -40,6 +40,17 @@ function createHeader(resObj) {
     });
 }
 
+function createTable() {
+    var tableDiv = document.createElement("div");
+    tableDiv.id = "tableDiv";
+    var table = document.createElement("table");
+    table.id = "table";
+    table.className = "table-fill";
+
+    tableDiv.appendChild(table);
+    document.querySelector(rootDom).appendChild(tableDiv);
+}
+
 function httpGet(method, successCallback, errorCallback) {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
@@ -74,15 +85,7 @@ function httpGet(method, successCallback, errorCallback) {
 }
 
 function initUI() {
-    var tableDiv = document.createElement("div");
-    tableDiv.id = "tableDiv";
-    var table = document.createElement("table");
-    table.id = "table";
-    table.className = "table-fill";
-
-    tableDiv.appendChild(table);
-    document.querySelector(rootDom).appendChild(tableDiv);
-
+    createTable();
 // Following would get called from a NAV element
     httpGet("/all", function(response) {
         createHeader(response[0]);
