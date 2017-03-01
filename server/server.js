@@ -20,7 +20,9 @@ app.use(function (req, res, next) {
 
 app.get('/test', function (req, res) {
     res.set('Content-Type', 'application/json');
-    res.json({query : "select * yup stuff"});
+    connection.query(' something here ', function (error, results, fields) {
+        res.json(result);
+    });
 });
 
 app.listen(8000, function() {
