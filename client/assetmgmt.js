@@ -15,6 +15,7 @@ function addRows(resObj) {
 
         Object.keys(asset).forEach(function(key) {
             var cell = document.createElement("td");
+            cell.id = key;
             cell.innerHTML = asset[key];
             row.appendChild(cell);
         });
@@ -30,6 +31,7 @@ function createHeader(resObj) {
     keys.forEach(function(key) {
         var title = document.createElement("th");
         title.innerHTML = key;
+        title.class = "table-title";
         tr.appendChild(title);
 
         document.getElementById("table").appendChild(tr);
@@ -72,10 +74,14 @@ function httpGet(method, successCallback, errorCallback) {
 }
 
 function initUI() {
+    var tableDiv = document.createElement("div");
+    tableDiv.id = "tableDiv";
     var table = document.createElement("table");
     table.id = "table";
+    table.className = "table-fill";
 
-    document.querySelector(rootDom).appendChild(table);
+    tableDiv.appendChild(table);
+    document.querySelector(rootDom).appendChild(tableDiv);
 
 // Following would get called from a NAV element
     httpGet("/all", function(response) {
