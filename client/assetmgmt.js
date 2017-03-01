@@ -12,11 +12,9 @@ function addRows(resObj) {
 
     resObj.forEach(function(asset) {
         var row = document.createElement("tr");
-        row.className = "table-row";
 
         Object.keys(asset).forEach(function(key) {
             var cell = document.createElement("td");
-            cell.className = "table-cell";
             cell.innerHTML = asset[key];
             row.appendChild(cell);
         });
@@ -27,13 +25,10 @@ function addRows(resObj) {
 function createHeader(resObj) {
     var table = document.getElementById("table");
     var tr = document.createElement("tr");
-    tr.className = "table-row";
-    tr.id = "table-header";
 
     var keys = Object.keys(resObj);
     keys.forEach(function(key) {
-        var title = document.createElement("td");
-        title.className = "table-row-title";
+        var title = document.createElement("th");
         title.innerHTML = key;
         tr.appendChild(title);
 
