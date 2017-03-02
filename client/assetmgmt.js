@@ -40,6 +40,29 @@ function createHeader(resObj) {
     });
 }
 
+function createNav() {
+    var nav = document.createElement("div");
+    nav.id = "nav";
+    var navBtn1 = document.createElement("button");
+    navBtn1.id = "btnNav1";
+    navBtn1.innerHTML = "All";
+    navBtn1.onclick = function() {
+        httpGet("/all", function(response) {
+            createHeader(response[0]);
+            addRows(response);
+        }, function(error) {
+            alert(error.message);
+        });
+    };
+    var navBtn2 = document.createElement("button");
+    navBtn2.id = "btnNav2";
+    navBtn2.innerHTML = "Something";
+
+    nav.appendChild(navBtn1);
+    nav.appendChild(navBtn2);
+    document.querySelector(rootDom).appendChild(nav);
+}
+
 function createTable() {
     var tableDiv = document.createElement("div");
     tableDiv.id = "tableDiv";
@@ -85,12 +108,6 @@ function httpGet(method, successCallback, errorCallback) {
 }
 
 function initUI() {
+    createNav();
     createTable();
-// Following would get called from a NAV element
-    httpGet("/all", function(response) {
-        createHeader(response[0]);
-        addRows(response);
-    }, function(error) {
-        alert(error.message);
-    });
 }
