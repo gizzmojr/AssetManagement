@@ -59,7 +59,7 @@ function createNav() {
     navBtn2.id = "btnNav2";
     navBtn2.innerHTML = "Clear Board";
     navBtn2.onclick = function() {
-        document.querySelector("#tableDiv").remove();
+        document.querySelector("#table").remove();
     };
 
     nav.appendChild(navBtn1);
@@ -68,14 +68,14 @@ function createNav() {
 }
 
 function createTable() {
-    var tableDiv = document.createElement("div");
-    tableDiv.id = "tableDiv";
-    var table = document.createElement("table");
+    var table = document.createElement("div");
     table.id = "table";
-    table.className = "table-fill";
+    var tableTable = document.createElement("table");
+    tableTable.id = "table";
+    tableTable.className = "table-fill";
 
-    tableDiv.appendChild(table);
-    document.querySelector(rootDom).appendChild(tableDiv);
+    table.appendChild(tableTable);
+    document.querySelector(rootDom).appendChild(table);
 }
 
 function httpGet(method, successCallback, errorCallback) {
