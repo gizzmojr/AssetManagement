@@ -48,6 +48,7 @@ function createNav() {
     navBtn1.innerHTML = "All";
     navBtn1.onclick = function() {
         httpGet("/all", function(response) {
+            createTable();
             createHeader(response[0]);
             addRows(response);
         }, function(error) {
@@ -56,7 +57,10 @@ function createNav() {
     };
     var navBtn2 = document.createElement("button");
     navBtn2.id = "btnNav2";
-    navBtn2.innerHTML = "Something";
+    navBtn2.innerHTML = "Clear Board";
+    navBtn2.onclick = function() {
+        document.querySelector("#tableDiv").remove();
+    };
 
     nav.appendChild(navBtn1);
     nav.appendChild(navBtn2);
@@ -109,5 +113,4 @@ function httpGet(method, successCallback, errorCallback) {
 
 function initUI() {
     createNav();
-    createTable();
 }
