@@ -36,7 +36,7 @@ Theme provided at http://codepen.io/alassetter/full/cyrfB/
   animation: float 5s infinite;
 }
 
-.table-title h3 {
+.table-title {
    color: #fafafa;
    font-size: 30px;
    font-weight: 400;
@@ -51,9 +51,9 @@ th {
   background:#1b1e24;
   border-bottom:4px solid #9ea7af;
   border-right: 1px solid #343a45;
-  font-size:23px;
+  font-size:18px;
   font-weight: 100;
-  padding:24px;
+  padding:10px;
   text-align:left;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   vertical-align:middle;
