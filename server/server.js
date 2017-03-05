@@ -21,7 +21,10 @@ app.use(function (req, res, next) {
 app.get('/test', function (req, res) {
     res.set('Content-Type', 'application/json');
     connection.query(' something here ', function (error, results, fields) {
-        res.json(result);
+        if (error) {
+            res.send(error);
+        }
+        res.json(results);
     });
 });
 
