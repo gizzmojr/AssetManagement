@@ -5,10 +5,10 @@ var express = require("express");
 var app = express();
 
 var connection = mysql.createConnection({
-    host     : "",
-    user     : "",
-    password : "",
-    database : ""
+    host     : "localhost",
+    user     : "root",
+    password : "password",
+    database : "assets"
 });
 
 // Web Server
@@ -18,9 +18,9 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.get('/test', function (req, res) {
+app.get('/all', function (req, res) {
     res.set('Content-Type', 'application/json');
-    connection.query(' something here ', function (error, results, fields) {
+    connection.query('SELECT Asset.barcode, Asset.status, Category.category, Employee.firstName, Location.location, AssetType.type, Asset.created, Asset.lastUpdate, Asset.serial, AssetType.nsn, Account.account, Asset.warrantyStart, Asset.warrantyEnd, Asset.configuration FROM assets.Asset AS Asset, assets.AssetType AS AssetType, assets.Employee AS Employee, assets.Location AS Location, assets.Category AS Category, assets.Account AS Account WHERE Asset.typeId = AssetType.id AND Asset.employeeId = Employee.id AND Asset.locationId = Location.id AND Asset.categoryId = Category.id AND Asset.accountID = Account.id', function (error, results, fields) {
         if (error) {
             res.send(error);
         }

@@ -1,5 +1,5 @@
 // Globals
-var url = "http://";
+var url = "http://localhost:8000";
 
 var rootDom = "#assetMgmt";
 
