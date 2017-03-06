@@ -48,7 +48,7 @@ function createHeader(resObj) {
         createFilters(key);
         var title = document.createElement("th");
         title.innerHTML = key;
-        title.class = "table-title";
+        title.className = "table-title";
         title.onclick = function() {
             sortTable(title);
         }
