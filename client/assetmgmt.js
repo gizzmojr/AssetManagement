@@ -60,10 +60,10 @@ function createHeader(resObj) {
 function createNav() {
     var nav = document.createElement("div");
     nav.id = "nav";
-    var navBtn1 = document.createElement("button");
-    navBtn1.id = "btnNav1";
-    navBtn1.innerHTML = "All";
-    navBtn1.onclick = function() {
+    var btnAll = document.createElement("button");
+    btnAll.id = "btnNav1";
+    btnAll.innerHTML = "All";
+    btnAll.onclick = function() {
         httpGet("/all", function(response) {
             createTable();
             createHeader(response[0]);
@@ -72,19 +72,18 @@ function createNav() {
             alert(error.message);
         });
     };
-    var navBtn2 = document.createElement("button");
-    navBtn2.id = "btnNav2";
-    navBtn2.innerHTML = "Clear Board";
-    navBtn2.onclick = function() {
-        document.querySelector("#table").remove();
+    var btnClear = document.createElement("button");
+    btnClear.id = "btnNav2";
+    btnClear.innerHTML = "Clear Board";
+    btnClear.onclick = function() {
         var table = document.querySelector("#table");
         if (table) {
             table.remove();
         }
     };
 
-    nav.appendChild(navBtn1);
-    nav.appendChild(navBtn2);
+    nav.appendChild(btnAll);
+    nav.appendChild(btnClear);
     document.querySelector(rootDom).appendChild(nav);
 }
 
@@ -101,7 +100,6 @@ function createTable() {
     table.appendChild(filters);
     table.appendChild(tableTable);
     document.querySelector(rootDom).appendChild(table);
-
 }
 
 function httpGet(method, successCallback, errorCallback) {
