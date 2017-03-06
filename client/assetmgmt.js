@@ -8,7 +8,7 @@ function initAssetMgmt() {
 }
 
 function addRows(resObj) {
-    var table = document.getElementById("table");
+    var table = document.querySelector("#table");
 
     resObj.forEach(function(asset) {
         var row = document.createElement("tr");
@@ -40,7 +40,7 @@ function createFilters(th) {
 }
 
 function createHeader(resObj) {
-    var table = document.getElementById("table");
+    var table = document.querySelector("#table");
     var tr = document.createElement("tr");
 
     var keys = Object.keys(resObj);
@@ -51,7 +51,7 @@ function createHeader(resObj) {
         title.class = "table-title";
         tr.appendChild(title);
 
-        document.getElementById("table").appendChild(tr);
+        document.querySelector("#table").appendChild(tr);
 
         return tr;
     });
