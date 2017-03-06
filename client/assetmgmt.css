@@ -169,3 +169,11 @@ td#configuration {
     margin: 4px 2px;
     cursor: pointer;
 }
+
+#filters span {
+    margin-left: 5px;
+}
+#filters label {
+    color: white;
+    background: transparent;
+}

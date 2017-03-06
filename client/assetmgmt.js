@@ -23,12 +23,29 @@ function addRows(resObj) {
     });
 }
 
+function createFilters(th) {
+    var filter = document.createElement("span");
+
+    var filterLabel = document.createElement("label");
+    filterLabel.innerHTML = th;
+
+    var filterList = document.createElement("select");
+    filterList.id = "text" + th;
+    filterList.name = th;
+    filterList.disabled = "false"; // until content is loaded
+
+    filter.appendChild(filterLabel);
+    filter.appendChild(filterList);
+    document.querySelector('#filters').appendChild(filter);
+}
+
 function createHeader(resObj) {
     var table = document.getElementById("table");
     var tr = document.createElement("tr");
 
     var keys = Object.keys(resObj);
     keys.forEach(function(key) {
+        createFilters(key);
         var title = document.createElement("th");
         title.innerHTML = key;
         title.class = "table-title";
@@ -60,6 +77,10 @@ function createNav() {
     navBtn2.innerHTML = "Clear Board";
     navBtn2.onclick = function() {
         document.querySelector("#table").remove();
+        var table = document.querySelector("#table");
+        if (table) {
+            table.remove();
+        }
     };
 
     nav.appendChild(navBtn1);
@@ -68,14 +89,19 @@ function createNav() {
 }
 
 function createTable() {
+    var filters = document.createElement("div");
+    filters.id = "filters";
+
     var table = document.createElement("div");
     table.id = "table";
     var tableTable = document.createElement("table");
     tableTable.id = "table";
     tableTable.className = "table-fill";
 
+    table.appendChild(filters);
     table.appendChild(tableTable);
     document.querySelector(rootDom).appendChild(table);
+
 }
 
 function httpGet(method, successCallback, errorCallback) {
