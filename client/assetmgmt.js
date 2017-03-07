@@ -75,6 +75,7 @@ function createNav() {
             createHeader(response[0]);
             addRows(response);
             sorttable.makeSortable(document.querySelector('.table-fill'));
+            fillFilters(response[0]);
         }, function(error) {
             alert(error.message);
         });
@@ -107,6 +108,26 @@ function createTable() {
     table.appendChild(filters);
     table.appendChild(tableTable);
     document.querySelector(rootDom).appendChild(table);
+}
+
+function fillFilters(resObj) {
+    var cols = Object.keys(resObj);
+
+    cols.forEach(function(col) {
+        var colValues = new Array();
+
+        document.querySelectorAll(".table-fill tbody tr #" + col).forEach(function(el) {
+            colValues.push(el.innerText);
+        });
+        uniqueValues = new Set(colValues);
+        uniqueValues.forEach(function(value) {
+            var select = document.querySelector("select#text" + col);
+            var option = document.createElement("option");
+            option.text = option.value = value;
+            select.add(option, 0);
+            select.disabled = false;
+        });
+    });
 }
 
 function httpGet(method, successCallback, errorCallback) {
