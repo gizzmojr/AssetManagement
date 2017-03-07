@@ -172,7 +172,12 @@ td#configuration {
 #filters span {
     margin-left: 5px;
 }
+
 #filters label {
     color: white;
     background: transparent;
+}
+
+#filters select {
+    width: 20px;
 }

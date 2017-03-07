@@ -119,8 +119,11 @@ function fillFilters(resObj) {
         document.querySelectorAll(".table-fill tbody tr #" + col).forEach(function(el) {
             colValues.push(el.innerText);
         });
-        uniqueValues = new Set(colValues);
-        uniqueValues.forEach(function(value) {
+        var uniqueSet = new Set(colValues);
+        var uniqueArray = Array.from(uniqueSet);
+        uniqueArray.sort();
+        uniqueArray.reverse();
+        uniqueArray.forEach(function(value) {
             var select = document.querySelector("select#text" + col);
             var option = document.createElement("option");
             option.text = option.value = value;
