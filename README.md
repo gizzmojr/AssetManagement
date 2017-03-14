@@ -1,6 +1,7 @@
 ## Synopsis
 
-A light weight client for asset (IT) management.
+A light weight all web client for asset (IT) management.
+Simple server side nodejs doing CRUD to SQL. 
 
 ## Motivation
 
