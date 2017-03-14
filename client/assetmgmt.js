@@ -2,6 +2,12 @@
 var url = "http://localhost:8000";
 
 var rootDom = "#assetMgmt";
+var dateColumns = [
+    "created",
+    "lastUpdate",
+    "warrantyStart",
+    "warrantyEnd"
+];
 
 function initAssetMgmt() {
     initUI();
@@ -19,7 +25,11 @@ function addRows(resObj) {
         Object.keys(asset).forEach(function(key) {
             var cell = document.createElement("td");
             cell.id = key;
-            cell.innerHTML = asset[key];
+            if (dateColumns.indexOf(key) >= 0) { // Is cell in our column lookup
+                cell.innerHTML = moment(asset[key], moment.ISO_8601).format("YYYY-MM-DD HH:mm");
+            } else {
+                cell.innerHTML = asset[key];
+            };
             row.appendChild(cell);
         });
         tbody.append(row);
