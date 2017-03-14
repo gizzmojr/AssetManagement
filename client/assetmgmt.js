@@ -115,8 +115,8 @@ function createTable() {
     tableTable.className = "table-fill";
     tableTable.className += " sortable";
 
-    table.appendChild(filters);
     table.appendChild(tableTable);
+    document.querySelector(rootDom).appendChild(filters);
     document.querySelector(rootDom).appendChild(table);
 }
 
