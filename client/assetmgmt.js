@@ -13,6 +13,34 @@ function initAssetMgmt() {
     initUI();
 }
 
+function addFilters() {
+    var filters = document.createElement("div");
+    filters.id = "filters";
+
+    document.querySelector(rootDom).appendChild(filters);
+}
+
+function addHeader(resObj) {
+    var table = document.querySelector(".table-fill");
+    var thead = document.createElement("thead");
+    var tr = document.createElement("tr");
+
+    table.appendChild(thead);
+
+    var keys = Object.keys(resObj);
+    keys.forEach(function(key) {
+        createFilters(key);
+        var title = document.createElement("th");
+        title.innerHTML = key;
+        title.className = "table-title";
+
+        tr.appendChild(title);
+        thead.appendChild(tr);
+
+        return tr;
+    });
+}
+
 function addRows(resObj) {
     var table = document.querySelector(".table-fill");
     var tbody = document.createElement("tbody");
@@ -52,27 +80,6 @@ function createFilters(th) {
     document.querySelector('#filters').appendChild(filter);
 }
 
-function createHeader(resObj) {
-    var table = document.querySelector(".table-fill");
-    var thead = document.createElement("thead");
-    var tr = document.createElement("tr");
-
-    table.appendChild(thead);
-
-    var keys = Object.keys(resObj);
-    keys.forEach(function(key) {
-        createFilters(key);
-        var title = document.createElement("th");
-        title.innerHTML = key;
-        title.className = "table-title";
-
-        tr.appendChild(title);
-        thead.appendChild(tr);
-
-        return tr;
-    });
-}
-
 function createNav() {
     var nav = document.createElement("div");
     nav.id = "nav";
@@ -81,11 +88,7 @@ function createNav() {
     btnAll.innerHTML = "All";
     btnAll.onclick = function() {
         httpGet("/all", function(response) {
-            createTable();
-            createHeader(response[0]);
-            addRows(response);
-            sorttable.makeSortable(document.querySelector('.table-fill'));
-            fillFilters(response[0]);
+            showTable(response);
         }, function(error) {
             alert(error.message);
         });
@@ -103,21 +106,6 @@ function createNav() {
     nav.appendChild(btnAll);
     nav.appendChild(btnClear);
     document.querySelector(rootDom).appendChild(nav);
-}
-
-function createTable() {
-    var filters = document.createElement("div");
-    filters.id = "filters";
-
-    var table = document.createElement("div");
-    table.id = "table";
-    var tableTable = document.createElement("table");
-    tableTable.className = "table-fill";
-    tableTable.className += " sortable";
-
-    table.appendChild(tableTable);
-    document.querySelector(rootDom).appendChild(filters);
-    document.querySelector(rootDom).appendChild(table);
 }
 
 function fillFilters(resObj) {
@@ -178,4 +166,22 @@ function httpGet(method, successCallback, errorCallback) {
 
 function initUI() {
     createNav();
+}
+
+function showTable(response) {
+    addFilters();
+
+    var table = document.createElement("div");
+    table.id = "table";
+    var tableTable = document.createElement("table");
+    tableTable.className = "table-fill";
+    tableTable.className += " sortable";
+
+    table.appendChild(tableTable);
+    document.querySelector(rootDom).appendChild(table);
+
+    addHeader(response[0]);
+    addRows(response);
+    sorttable.makeSortable(document.querySelector('.table-fill'));
+    fillFilters(response[0]);
 }
