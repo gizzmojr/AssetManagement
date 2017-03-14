@@ -10,7 +10,7 @@
     "http": "latest",
     "url": "latest"
   },
-  "license" : "BSD-3-Clause",
+  "license" : "GNU GPLv3",
   "repository" : {
     "type" : "git",
     "url" : "https://github.com/gizzmojr/AssetManagement.git"
