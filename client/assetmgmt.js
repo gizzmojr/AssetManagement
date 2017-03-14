@@ -13,23 +13,39 @@ function initAssetMgmt() {
     initUI();
 }
 
-function addFilters() {
+function addFilters(response) {
     var filters = document.createElement("div");
     filters.id = "filters";
 
     document.querySelector(rootDom).appendChild(filters);
+
+    var keys = Object.keys(response[0]);
+    keys.forEach(function(key) {
+        var filter = document.createElement("span");
+
+        var filterLabel = document.createElement("label");
+        filterLabel.innerHTML = key;
+
+        var filterList = document.createElement("select");
+        filterList.id = "text" + key;
+        filterList.name = key;
+        filterList.disabled = "false"; // until content is loaded
+
+        filter.appendChild(filterLabel);
+        filter.appendChild(filterList);
+        document.querySelector('#filters').appendChild(filter);
+    });
 }
 
-function addHeader(resObj) {
+function addHeader(response) {
     var table = document.querySelector(".table-fill");
     var thead = document.createElement("thead");
     var tr = document.createElement("tr");
 
     table.appendChild(thead);
 
-    var keys = Object.keys(resObj);
+    var keys = Object.keys(response);
     keys.forEach(function(key) {
-        createFilters(key);
         var title = document.createElement("th");
         title.innerHTML = key;
         title.className = "table-title";
@@ -41,13 +57,13 @@ function addHeader(resObj) {
     });
 }
 
-function addRows(resObj) {
+function addRows(response) {
     var table = document.querySelector(".table-fill");
     var tbody = document.createElement("tbody");
 
     table.appendChild(tbody);
 
-    resObj.forEach(function(asset) {
+    response.forEach(function(asset) {
         var row = document.createElement("tr");
 
         Object.keys(asset).forEach(function(key) {
@@ -62,22 +78,6 @@ function addRows(resObj) {
         });
         tbody.append(row);
     });
-}
-
-function createFilters(th) {
-    var filter = document.createElement("span");
-
-    var filterLabel = document.createElement("label");
-    filterLabel.innerHTML = th;
-
-    var filterList = document.createElement("select");
-    filterList.id = "text" + th;
-    filterList.name = th;
-    filterList.disabled = "false"; // until content is loaded
-
-    filter.appendChild(filterLabel);
-    filter.appendChild(filterList);
-    document.querySelector('#filters').appendChild(filter);
 }
 
 function createNav() {
@@ -108,8 +108,8 @@ function createNav() {
     document.querySelector(rootDom).appendChild(nav);
 }
 
-function fillFilters(resObj) {
-    var cols = Object.keys(resObj);
+function fillFilters(response) {
+    var cols = Object.keys(response);
 
     cols.forEach(function(col) {
         var colValues = new Array();
@@ -169,7 +169,7 @@ function initUI() {
 }
 
 function showTable(response) {
-    addFilters();
+    addFilters(response);
 
     var table = document.createElement("div");
     table.id = "table";
