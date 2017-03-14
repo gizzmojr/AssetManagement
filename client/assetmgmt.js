@@ -77,7 +77,7 @@ function createNav() {
     var nav = document.createElement("div");
     nav.id = "nav";
     var btnAll = document.createElement("button");
-    btnAll.id = "btnNav1";
+    btnAll.id = "btnAll";
     btnAll.innerHTML = "All";
     btnAll.onclick = function() {
         httpGet("/all", function(response) {
@@ -91,7 +91,7 @@ function createNav() {
         });
     };
     var btnClear = document.createElement("button");
-    btnClear.id = "btnNav2";
+    btnClear.id = "btnClear";
     btnClear.innerHTML = "Clear Board";
     btnClear.onclick = function() {
         var table = document.querySelector("#table");
