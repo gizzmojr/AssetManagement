@@ -80,6 +80,15 @@ function addRows(response) {
     });
 }
 
+function clearTable() {
+    var table = document.querySelector("#table");
+    var filters = document.querySelector("#filters");
+    if (table) {
+        table.remove();
+        filters.remove();
+    }
+}
+
 function createNav() {
     var nav = document.createElement("div");
     nav.id = "nav";
@@ -87,6 +96,7 @@ function createNav() {
     btnAll.id = "btnAll";
     btnAll.innerHTML = "All";
     btnAll.onclick = function() {
+        clearTable();
         httpGet("/all", function(response) {
             showTable(response);
         }, function(error) {
@@ -96,12 +106,7 @@ function createNav() {
     var btnClear = document.createElement("button");
     btnClear.id = "btnClear";
     btnClear.innerHTML = "Clear Board";
-    btnClear.onclick = function() {
-        var table = document.querySelector("#table");
-        if (table) {
-            table.remove();
-        }
-    };
+    btnClear.onclick = clearTable;
 
     nav.appendChild(btnAll);
     nav.appendChild(btnClear);
