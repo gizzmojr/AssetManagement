@@ -1,5 +1,7 @@
 // Globals
 var url = "http://localhost:8000";
+var filterSelection = "";
+var filterValue = "";
 
 var rootDom = "#assetMgmt";
 var dateColumns = [
@@ -30,6 +32,10 @@ function addFilters(response) {
         filterList.id = "text" + key;
         filterList.name = key;
         filterList.disabled = "false"; // until content is loaded
+
+        filterList.addEventListener("change", function() {
+            filterTable(this.name);
+        });
 
         filter.appendChild(filterLabel);
         filter.appendChild(filterList);
@@ -133,6 +139,20 @@ function fillFilters(response) {
             select.add(option, 0);
             select.disabled = false;
         });
+    });
+}
+
+function filterTable(filter) {
+    filterSelection = filter;
+    filterValue = document.getElementById("text" + filter).value;
+    var node = document.querySelector(".table-fill tbody");
+    var nodeList = node.childNodes;
+
+    nodeList.forEach(function(row) {
+        var rowChildren = row.children;
+        if (!(rowChildren[filterSelection].innerHTML == filterValue)) {
+            row.hidden = true;
+        }
     });
 }
 
