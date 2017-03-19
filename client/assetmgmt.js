@@ -131,14 +131,14 @@ function fillFilters(response) {
         var uniqueSet = new Set(colValues);
         var uniqueArray = Array.from(uniqueSet);
         uniqueArray.sort();
-        uniqueArray.reverse();
         uniqueArray.forEach(function(value) {
             var select = document.querySelector("select#text" + col);
             var option = document.createElement("option");
             option.text = option.value = value;
-            select.add(option, 0);
+            select.add(option);
             select.disabled = false;
         });
+        uniqueArray.reverse();
     });
 }
 
