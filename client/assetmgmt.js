@@ -12,7 +12,10 @@ var dateColumns = [
 ];
 var filters = [
     "status",
-    "category"
+    "category",
+    "location",
+    "type",
+    "account"
 ];
 
 function initAssetMgmt() {
