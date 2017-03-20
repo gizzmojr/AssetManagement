@@ -135,8 +135,6 @@ function filterTable(filter) {
     var toDelete = [];
     rows.forEach(function(row) {
         if (!(row.children[filter].innerHTML == filterValue)) {
-            //row.hidden = "true";
-            //row.parentNode.removeChild(row);
             toDelete.push(row);
         }
     });
