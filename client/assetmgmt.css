@@ -20,6 +20,7 @@ Theme provided at http://codepen.io/alassetter/full/cyrfB/
 */
 
 #table {
+    margin-top: 10px;
     overflow-x: auto;
 }
 
@@ -153,7 +154,6 @@ td#configuration {
 
 /*** Nav Styles **/
 #nav {
-    flex: 1;
 }
 
 #nav button {
@@ -167,6 +167,10 @@ td#configuration {
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
+}
+
+#filters {
+    margin-top: 10px;
 }
 
 #filters span {
