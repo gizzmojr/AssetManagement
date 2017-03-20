@@ -10,27 +10,30 @@ var dateColumns = [
     "warrantyStart",
     "warrantyEnd"
 ];
+var filters = [
+    "status",
+    "category"
+];
 
 function initAssetMgmt() {
     initUI();
 }
 
-function addFilters(response) {
-    var filters = document.createElement("div");
-    filters.id = "filters";
+function addFilters() {
+    var filterDiv = document.createElement("div");
+    filterDiv.id = "filters";
 
-    document.querySelector(rootDom).appendChild(filters);
+    document.querySelector(rootDom).appendChild(filterDiv);
 
-    var keys = Object.keys(response[0]);
-    keys.forEach(function(key) {
-        var filter = document.createElement("span");
+    filters.forEach(function(filter) {
+        var span = document.createElement("span");
 
         var filterLabel = document.createElement("label");
-        filterLabel.innerHTML = key;
+        filterLabel.innerHTML = filter;
 
         var filterList = document.createElement("select");
-        filterList.id = "text" + key;
-        filterList.name = key;
+        filterList.id = "text" + filter;
+        filterList.name = filter;
         filterList.disabled = "false"; // until content is loaded
 
         var option = document.createElement("option");
@@ -42,9 +45,9 @@ function addFilters(response) {
             filterTable(this.name);
         });
 
-        filter.appendChild(filterLabel);
-        filter.appendChild(filterList);
-        document.querySelector('#filters').appendChild(filter);
+        span.appendChild(filterLabel);
+        span.appendChild(filterList);
+        document.querySelector('#filters').appendChild(span);
     });
 }
 
@@ -124,41 +127,40 @@ function createNav() {
     document.querySelector(rootDom).appendChild(nav);
 }
 
-function fillFilters(response) {
-    var cols = Object.keys(response);
-
-    cols.forEach(function(col) {
-        var colValues = new Array();
-
-        document.querySelectorAll(".table-fill tbody tr #" + col).forEach(function(el) {
-            colValues.push(el.innerText);
+function fillFilters() {
+    var unique = [];
+    var rows = getTableRows(".table-fill tbody");
+    filters.forEach(function(filter) {
+        rows.forEach(function(row) {
+            var value = row.children[filter].innerHTML;
+            if (unique.indexOf(value) == -1) {
+                unique.push(value);
+                var select = document.querySelector("select#text" + filter);
+                var option = document.createElement("option");
+                option.text = option.value = value;
+                select.add(option);
+                select.disabled = false;
+                //select.sort();
+                //select.reverse();
+            }
         });
-        var uniqueSet = new Set(colValues);
-        var uniqueArray = Array.from(uniqueSet);
-        uniqueArray.sort();
-        uniqueArray.forEach(function(value) {
-            var select = document.querySelector("select#text" + col);
-            var option = document.createElement("option");
-            option.text = option.value = value;
-            select.add(option);
-            select.disabled = false;
-        });
-        uniqueArray.reverse();
     });
 }
 
 function filterTable(filter) {
-    filterSelection = filter;
     filterValue = document.getElementById("text" + filter).value;
-    var node = document.querySelector(".table-fill tbody");
-    var nodeList = node.childNodes;
-
-    nodeList.forEach(function(row) {
-        var rowChildren = row.children;
-        if (!(rowChildren[filterSelection].innerHTML == filterValue)) {
+    var rows = getTableRows(".table-fill tbody");
+    rows.forEach(function(row) {
+        if (!(row.children[filter].innerHTML == filterValue)) {
             row.hidden = true;
         }
     });
+}
+
+function getTableRows(table) {
+    var node = document.querySelector(table);
+    var nodeList = node.childNodes;
+    return nodeList;
 }
 
 function httpGet(method, successCallback, errorCallback) {
@@ -199,7 +201,7 @@ function initUI() {
 }
 
 function showTable(response) {
-    addFilters(response);
+    addFilters();
 
     var table = document.createElement("div");
     table.id = "table";
@@ -213,5 +215,5 @@ function showTable(response) {
     addHeader(response[0]);
     addRows(response);
     sorttable.makeSortable(document.querySelector('.table-fill'));
-    fillFilters(response[0]);
+    fillFilters();
 }
