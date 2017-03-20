@@ -123,7 +123,7 @@ function fillFilters() {
         var select = document.querySelector("select#text" + filter);
         var option = document.createElement("option");
         option.text = option.value = "Select a filter";
-        option.disabled = option.selected = "true";
+        option.disabled = option.selected = true;
         select.add(option);
 
         unique.forEach(function(value) {
@@ -132,6 +132,11 @@ function fillFilters() {
             select.add(option);
             select.disabled = false;
         });
+
+        if (select.length == 2) {
+            // One actual option, first is disabled "Select" text
+            select.children[1].selected = true;
+        }
     });
 }
 
@@ -209,7 +214,7 @@ function showTable(response) {
         var filterList = document.createElement("select");
         filterList.id = "text" + filter;
         filterList.name = filter;
-        filterList.disabled = "false"; // until content is loaded
+        filterList.disabled = false; // until content is loaded
 
         filterList.addEventListener("change", function() {
             filterTable(this.name);
