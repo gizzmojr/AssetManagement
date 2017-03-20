@@ -19,38 +19,6 @@ function initAssetMgmt() {
     initUI();
 }
 
-function addFilters() {
-    var filterDiv = document.createElement("div");
-    filterDiv.id = "filters";
-
-    document.querySelector(rootDom).appendChild(filterDiv);
-
-    filters.forEach(function(filter) {
-        var span = document.createElement("span");
-
-        var filterLabel = document.createElement("label");
-        filterLabel.innerHTML = filter;
-
-        var filterList = document.createElement("select");
-        filterList.id = "text" + filter;
-        filterList.name = filter;
-        filterList.disabled = "false"; // until content is loaded
-
-        var option = document.createElement("option");
-        option.text = "Select..";
-        option.disabled = option.selected = "true";
-        filterList.add(option);
-
-        filterList.addEventListener("change", function() {
-            filterTable(this.name);
-        });
-
-        span.appendChild(filterLabel);
-        span.appendChild(filterList);
-        document.querySelector('#filters').appendChild(span);
-    });
-}
-
 function addHeader(response) {
     var table = document.querySelector(".table-fill");
     var thead = document.createElement("thead");
@@ -94,6 +62,15 @@ function addRows(response) {
     });
 }
 
+function clearFilters() {
+    filters.forEach(function(filter) {
+        var select = document.querySelector("select#text" + filter);
+        while (select.options.length > 0) {
+            select.remove(0);
+        }
+    });
+}
+
 function clearTable() {
     var table = document.querySelector("#table");
     var filters = document.querySelector("#filters");
@@ -131,6 +108,11 @@ function fillFilters() {
     var unique = [];
     var rows = getTableRows(".table-fill tbody");
     filters.forEach(function(filter) {
+        var select = document.querySelector("select#text" + filter);
+        var option = document.createElement("option");
+        option.text = "Select..";
+        option.disabled = option.selected = "true";
+        select.add(option);
         rows.forEach(function(row) {
             var value = row.children[filter].innerHTML;
             if (unique.indexOf(value) == -1) {
@@ -150,11 +132,20 @@ function fillFilters() {
 function filterTable(filter) {
     filterValue = document.getElementById("text" + filter).value;
     var rows = getTableRows(".table-fill tbody");
+    var toDelete = [];
     rows.forEach(function(row) {
         if (!(row.children[filter].innerHTML == filterValue)) {
-            row.hidden = true;
+            //row.hidden = "true";
+            //row.parentNode.removeChild(row);
+            toDelete.push(row);
         }
     });
+    var table = document.querySelector(".table-fill tbody");
+    toDelete.forEach(function(row) {
+        table.removeChild(row);
+    });
+    clearFilters();
+    fillFilters();
 }
 
 function getTableRows(table) {
@@ -201,7 +192,29 @@ function initUI() {
 }
 
 function showTable(response) {
-    addFilters();
+    var filterDiv = document.createElement("div");
+    filterDiv.id = "filters";
+    document.querySelector(rootDom).appendChild(filterDiv);
+
+    filters.forEach(function(filter) {
+        var span = document.createElement("span");
+
+        var filterLabel = document.createElement("label");
+        filterLabel.innerHTML = filter;
+
+        var filterList = document.createElement("select");
+        filterList.id = "text" + filter;
+        filterList.name = filter;
+        filterList.disabled = "false"; // until content is loaded
+
+        filterList.addEventListener("change", function() {
+            filterTable(this.name);
+        });
+
+        span.appendChild(filterLabel);
+        span.appendChild(filterList);
+        document.querySelector('#filters').appendChild(span);
+    });
 
     var table = document.createElement("div");
     table.id = "table";
