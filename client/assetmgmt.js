@@ -111,23 +111,26 @@ function fillFilters() {
     var unique = [];
     var rows = getTableRows(".table-fill tbody");
     filters.forEach(function(filter) {
-        var select = document.querySelector("select#text" + filter);
-        var option = document.createElement("option");
-        option.text = "Select..";
-        option.disabled = option.selected = "true";
-        select.add(option);
+        unique = [];
         rows.forEach(function(row) {
             var value = row.children[filter].innerHTML;
             if (unique.indexOf(value) == -1) {
                 unique.push(value);
-                var select = document.querySelector("select#text" + filter);
-                var option = document.createElement("option");
-                option.text = option.value = value;
-                select.add(option);
-                select.disabled = false;
-                //select.sort();
-                //select.reverse();
             }
+        });
+        unique.sort();
+
+        var select = document.querySelector("select#text" + filter);
+        var option = document.createElement("option");
+        option.text = option.value = "Select a filter";
+        option.disabled = option.selected = "true";
+        select.add(option);
+
+        unique.forEach(function(value) {
+            option = document.createElement("option");
+            option.text = option.value = value;
+            select.add(option);
+            select.disabled = false;
         });
     });
 }
