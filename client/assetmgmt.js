@@ -33,6 +33,11 @@ function addFilters(response) {
         filterList.name = key;
         filterList.disabled = "false"; // until content is loaded
 
+        var option = document.createElement("option");
+        option.text = "Select..";
+        option.disabled = option.selected = "true";
+        filterList.add(option);
+
         filterList.addEventListener("change", function() {
             filterTable(this.name);
         });
