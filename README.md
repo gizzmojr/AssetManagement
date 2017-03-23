@@ -18,7 +18,7 @@ Server: NODEJS. Tested with v4.2.6
 
 Server: cd server && npm install && nodejs server.js
 
-Client: web-browser to http://<server>:8000
+Client: index.html
 
 ## License
 
