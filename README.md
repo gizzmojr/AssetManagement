@@ -1,3 +1,8 @@
+# Project Stopped
+I have recently found FOSS https://snipeitapp.com/ which is exactly the direction I was going and there's no reason to reinvent the wheel.
+
+Keeping the repo for future code snippits
+
 ## Synopsis
 
 A light weight all web client for asset (IT) management.
